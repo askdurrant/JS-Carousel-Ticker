@@ -38,7 +38,7 @@ var containerTicker = function(container, config){
 	var containerWidth = ( (pictureNum / picsInViewport) * 100);
 	var containerWidthPercent = containerWidth + '%';
 	$(container).css({'width' : containerWidthPercent});
-	var picWidthPercent = containerWidth / pictureNum;
+	var rightPosition = -(containerWidth - 100);
 
 	// Finds padding for .viewport
 	var pic = $('.pic img')[0];
@@ -54,7 +54,7 @@ var containerTicker = function(container, config){
 
 	//Calculates how many pixels per milisecond
 	var totalAnimSpeed = animSpeed * pictureNum; //Finds total length of time for ticker to complete 1 cycle
-	var percentPerMs = containerWidth / totalAnimSpeed; //Find pixels/ms
+	var percentPerMs = containerWidth / totalAnimSpeed; //Find percent/ms
 	var timeLeft;
 
   //Set animate end point
@@ -65,9 +65,8 @@ var containerTicker = function(container, config){
   }
   else if(direction === 'right'){
   	$(container + ' > .pic').css('float', 'right');
-  	$(container).css('left', -(containerWidth - 100) + '%');
+  	$(container).css('left', rightPosition + '%');
   }
-
 
 	//Horizontal Slider function LEFT
 	function slideHorizLeft(time){
@@ -92,7 +91,7 @@ var containerTicker = function(container, config){
 	//Animates #container, inserts 1st .pic after last, resets position
 		$(container).animate(animDirec, time, 'linear', function(){
 			$(first).insertAfter(last);
-			$(container).css(direction, '0');
+			$(container).css('left', rightPosition + '%');
 			slideHorizRight();
 		});
 	};
@@ -105,7 +104,7 @@ var containerTicker = function(container, config){
   }
   else if(direction === 'right'){
       animDirec = {};
-      animDirec[direction] = - ((100 / picsInViewport) * 2) + "%";
+      animDirec['left'] = rightPosition + (100 / picsInViewport) + "%";
       slideHorizRight();
   }
 
@@ -125,16 +124,14 @@ var containerTicker = function(container, config){
 			$(this).stop(false,false);		
 
 			var individualWidth = $(container + ' .pic').width();
-			var pixelToPercentLeft = ($(this).css("left").replace(/[A-Za-z$-]/g, "") / individualWidth) * picWidthPercent;
-			var pixelToPercentRight = ($(this).css("right").replace(/[A-Za-z$-]/g, "") / individualWidth) * picWidthPercent;
+			var pixelToPercentLeft = -($(this).css("left").replace(/[A-Za-z$-%]/g, "") / individualWidth);
+			var pixelToPercentRight = ((rightPosition + (100 / picsInViewport))/(100 / picsInViewport)) -($(this).css("left").replace(/[A-Za-z$-%]/g, "")) / individualWidth;
 
 			if(direction === 'left'){
-				var stopPosition = picWidthPercent - $(this).css("left").replace(/[A-Za-z$-]/g, "");
-						timeLeft = animSpeed -  (pixelToPercentLeft / percentPerMs);	
+				timeLeft = (1-pixelToPercentLeft) * animSpeed;	
 			}
 			else if(direction === 'right'){
-				var stopPosition = $(this).css("right").replace(/[A-Za-z$-]/g, "") / 2;
-						timeLeft = animSpeed - ((pixelToPercentRight / percentPerMs) / 2);
+				timeLeft = (pixelToPercentRight) * animSpeed;	
 			}
 		});		
 		//Mouse leaves and restarts
@@ -146,6 +143,6 @@ var containerTicker = function(container, config){
 	setListeners();
 };
 
-$(document).ready(containerTicker('.carousel', {direction: 'left', animSpeed: 3000, picsInViewport: 4}));
+$(document).ready(containerTicker('.carousel', {direction: 'left', animSpeed: 1000, picsInViewport: 2}));
 
-$(document).ready(containerTicker('.carousel1', {direction: 'right', animSpeed: 2000, picsInViewport: 7}));
+$(document).ready(containerTicker('.carousel1', {direction: 'right', animSpeed: 2000, picsInViewport: 4}));
