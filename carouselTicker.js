@@ -34,7 +34,6 @@ var containerTicker = function(container, config){
 	var picWidthTotal = 0;
 	var picWidthAll = 0;
 
-
 	// Sets container width
 	var containerWidth = ( (pictureNum / picsInViewport) * 100);
 	var containerWidthPercent = containerWidth + '%';
@@ -55,7 +54,7 @@ var containerTicker = function(container, config){
 
 	//Calculates how many pixels per milisecond
 	var totalAnimSpeed = animSpeed * pictureNum; //Finds total length of time for ticker to complete 1 cycle
-	var pixelPerMs = 400 / totalAnimSpeed; //Find pixels/ms
+	var percentPerMs = containerWidth / totalAnimSpeed; //Find pixels/ms
 	var timeLeft;
 
   //Set animate end point
@@ -101,12 +100,12 @@ var containerTicker = function(container, config){
   //Set animate CSS Direction
 	if(direction === 'left'){
       animDirec = {};
-      animDirec[direction] = -50 + "%";
+      animDirec[direction] = - (100 / picsInViewport) + "%";
       slideHorizLeft();
   }
   else if(direction === 'right'){
       animDirec = {};
-      animDirec[direction] = -100 + "%";
+      animDirec[direction] = - ((100 / picsInViewport) * 2) + "%";
       slideHorizRight();
   }
 
@@ -131,11 +130,11 @@ var containerTicker = function(container, config){
 
 			if(direction === 'left'){
 				var stopPosition = picWidthPercent - $(this).css("left").replace(/[A-Za-z$-]/g, "");
-						timeLeft = animSpeed -  (pixelToPercentLeft / pixelPerMs);	
+						timeLeft = animSpeed -  (pixelToPercentLeft / percentPerMs);	
 			}
 			else if(direction === 'right'){
 				var stopPosition = $(this).css("right").replace(/[A-Za-z$-]/g, "") / 2;
-						timeLeft = animSpeed - ((pixelToPercentRight / pixelPerMs) / 2);
+						timeLeft = animSpeed - ((pixelToPercentRight / percentPerMs) / 2);
 			}
 		});		
 		//Mouse leaves and restarts
@@ -147,168 +146,6 @@ var containerTicker = function(container, config){
 	setListeners();
 };
 
-$(document).ready(containerTicker('.carousel', {direction: 'left', animSpeed: 3000, margin: 10}));
+$(document).ready(containerTicker('.carousel', {direction: 'left', animSpeed: 3000, picsInViewport: 4}));
 
-$(document).ready(containerTicker('.carousel1', {direction: 'right', animSpeed: 2000}));
-
-
-
-
-
-
-// $(document).ready(carouselLeft('.carousel', 3000));
-
-	//Calculates width of all the pictures
-	// for (i=0; i < pictureNum; i++){		
-	// 	var picture = $('.pic img')[i];
-	// 	picWidth[i] = picture.width;
-	// 	picWidthAll += picWidth[i];
-	// 	picHeight[i] = picture.height;
-	// };
-
-
-	// Adds margin to container if applicable
-	// if(margin !== 0){
-	// 	var totalMargin = margin * pictureNum;
-	// 	picWidthTotal = picWidthAll + totalMargin;
-	// }
-	// else{
-	// 	picWidthTotal = picWidthAll;
-	// }
-
-
-	// console.log(picWidthTotal);
-	// console.log(picHeight);
-
-	// // Sets CSS propoerties
-	// var viewportPadding = ( ( ( picHeight[0] / picWidth[0] ) / picsInViewport) * 100) + '%';
-	// console.log(viewportPadding);
-
-	// $('.viewport').css({'padding-bottom' : viewportPadding});
-
-
-
-
-
-
-
-
-// var carouselLeft = function(carousel, time){
-
-// 	//Set Custom Variable
-// 	var margin = 10;				//Margin right on pic
-// 	var picWidth = 600 + margin;	//Width of the picture in div .pic
-
-
-// 	//Set Global Variables
-// 	var slideTime = time;								//Time
-// 	var viewportSize = $("#viewport").width();			//Viewport div size
-// 	var carousel = carousel;
-// 	var picNo = $(carousel + ' div.pic').length;
-// 	var lastpic = picNo - 1;
-// 	var pixelPerMs = picWidth / slideTime;
-// 	var width = picNo * picWidth;
-// 	$(carousel).width(width);
-// 	var timeLeft;
-
-
-// 	//Horizontal Slider function
-// 	var slideHoriz = function(time){
-// 		time = (typeof time === "undefined") ? slideTime : time;
-// 	//Sets first and last .pic
-// 		var first = $(carousel + ' .pic')[0];
-// 		var last = $(carousel + ' .pic')[lastpic];
-// 	//Animates #carousel, inserts 1st .pic after last, resets position
-// 		$(carousel).animate({left:-picWidth},time, 'linear', function(){
-// 			$(first).insertAfter(last);
-// 			$(carousel).css({left:0});
-
-// 			slideHoriz();
-// 		});
-// 	};
-
-// 	//Restart function - If there is timeLeft takes it to slideHoriz
-// 	var restart = function(){
-// 		slideHoriz(timeLeft);
-// 	}
-
-// 	//setListeners - Finds timeLeft and the stop position of carousel
-// 	function setListeners(){
-// 		$(carousel).on('mouseenter', function(){
-// 		$(this).stop(false,false);		
-// 		var leftStop = picWidth - $(this).css("left").replace(/[A-Za-z$-]/g, "");
-// 			timeLeft = leftStop / pixelPerMs;
-// 	});
-
-// 	//Mouse leaves and restarts
-// 	$(carousel).on('mouseleave', function(){
-// 		restart();
-// 	});
-// 	}
-
-// 	setListeners();
-// 	slideHoriz();
-
-
-// }
-
-
-// var carouselRight = function(carousel,time){
-
-// 	//Set Custom Variable
-// 	var margin = 10;				//Margin right on pic
-// 	var picWidth = 600 + margin;	//Width of the picture in div .pic
-
-
-// 	//Set Global Variables
-// 	var slideTime = time;								//Time
-// 	var viewportSize = $(".viewport").width();			//Viewport div size
-// 	var carousel = carousel;
-// 	var picNo = $(carousel + " div.pic").length;
-// 	var lastpic = picNo - 1;
-// 	var pixelPerMs = picWidth / slideTime;
-// 	var width = picNo * picWidth;
-// 	var positionRight = (width - viewportSize);  //Finds position so last div is to right hand side of viewport
-// 	$(carousel).width(width);
-// 	$(carousel).css({left: - positionRight});
-// 	var timeLeft;
-
-// 	//Horizontal Slider function
-// 	var slideHoriz = function(time){
-// 		time = (typeof time === "undefined") ? slideTime : time;
-// 	//Sets first and last .pic
-// 		var first = $(carousel + ' .pic')[0];
-// 		var last = $(carousel + ' .pic')[lastpic];
-// 	//Animates #carousel, inserts 1st .pic after last, resets position
-// 		$(carousel).animate({left: picWidth - positionRight},time, 'linear', function(){
-// 			$(last).insertBefore(first);
-// 			$(carousel).css({left: - positionRight});
-
-// 			slideHoriz();
-// 		});
-// 	};
-
-// 	//Restart function - If there is timeLeft takes it to slideHoriz
-// 	var restart = function(){
-// 		slideHoriz(timeLeft);
-// 	}
-
-// 	//setListeners - Finds timeLeft and the stop position of carousel
-// 	function setListeners(){
-// 		$(carousel).on('mouseenter', function(){
-// 		$(this).stop(false,false);		
-// 		var leftStop = positionRight - $(this).css("left").replace(/[A-Za-z$-]/g, "");
-// 			timeLeft = slideTime - (leftStop / pixelPerMs);
-// 	});
-
-// 	//Mouse leaves and restarts
-// 	$(carousel).on('mouseleave', function(){
-// 		restart();
-// 	});
-// 	}
-
-// 	setListeners();
-
-// 	slideHoriz();
-
-// }
+$(document).ready(containerTicker('.carousel1', {direction: 'right', animSpeed: 2000, picsInViewport: 7}));
