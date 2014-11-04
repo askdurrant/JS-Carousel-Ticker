@@ -21,36 +21,36 @@ Include the jQuery library in your document.
 
 __HTML__
 
-<div class="outside">
-    <div class="viewport">
-        <div class="carousel">
-            <div class="pic">
-                <img src="images/1.png" />
-            </div>
-            <div class="pic">
-                <img src="images/2.png" />
-            </div>
-            <div class="pic">
-                <img src="images/3.png" />
-            </div>
-            <div class="pic">
-                <img src="images/4.png" />
-            </div>
-            <div class="pic">
-                <img src="images/5.png" />
-            </div>
-            <div class="pic">
-                <img src="images/6.png" />
-            </div>
-            <div class="pic">
-                <img src="images/7.png" />
-            </div>
-            <div class="pic">
-                <img src="images/8.png" />
+    <div class="outside">
+        <div class="viewport">
+            <div class="carousel">
+                <div class="pic">
+                    <img src="images/1.png" />
+                </div>
+                <div class="pic">
+                    <img src="images/2.png" />
+                </div>
+                <div class="pic">
+                    <img src="images/3.png" />
+                </div>
+                <div class="pic">
+                    <img src="images/4.png" />
+                </div>
+                <div class="pic">
+                    <img src="images/5.png" />
+                </div>
+                <div class="pic">
+                    <img src="images/6.png" />
+                </div>
+                <div class="pic">
+                    <img src="images/7.png" />
+                </div>
+                <div class="pic">
+                    <img src="images/8.png" />
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 __CSS__
 
