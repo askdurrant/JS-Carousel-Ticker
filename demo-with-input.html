@@ -1,7 +1,9 @@
 <style>
+
 .outside{
     max-width:1200px;
 }
+
 .viewport{
     width: 100%;
     overflow: hidden;
@@ -9,6 +11,7 @@
     height: 0;
     margin-bottom: 20px;
 }
+
 .carousel{
     top: 0;
     left: 0;
@@ -16,6 +19,7 @@
     position: absolute;
     height: 100%;
 }
+
 .carousel1{
     top: 0;
     left: 0;
@@ -23,6 +27,7 @@
     position: absolute;
     height: 100%;
 }
+
 .pic{
     display: block;
     position: relative;
@@ -31,10 +36,45 @@
     float: left;
     height: 100%;
 }
+
 .pic img{
     width: 100%;
     height: 100%;
 }
+
+
+/* FORM STYLING */
+
+#inputs{
+    width: 300px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+label{
+    float: left;
+    width: 150px;
+}
+
+.row{
+    display: block;
+    width: 100%;
+    height: 55px;
+    margin: 10px;
+}
+select{
+    width: 150px;
+}
+input{
+    width:150px;
+}
+
+.button{
+    width: 200px;
+    margin-left: 50px;
+}
+
+
 </style>
 
 <div class="outside">
@@ -66,37 +106,33 @@
             </div>
         </div>
     </div>
-
-    <div class="viewport">
-        <div class="carousel1">
-            <div class="pic">
-                <img src="images/1.png" />
-            </div>
-            <div class="pic">
-                <img src="images/2.png" />
-            </div>
-            <div class="pic">
-                <img src="images/3.png" />
-            </div>
-            <div class="pic">
-                <img src="images/4.png" />
-            </div>
-            <div class="pic">
-                <img src="images/5.png" />
-            </div>
-            <div class="pic">
-                <img src="images/6.png" />
-            </div>
-            <div class="pic">
-                <img src="images/7.png" />
-            </div>
-            <div class="pic">
-                <img src="images/8.png" />
-            </div>
-        </div>
-    </div>
-
 </div>
 
+<form id="inputs">
+    <div class="row">
+        <label>Direction:</label>
+        <select id="directionForm">
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+        </select>
+    </div>
+    <div class="row">
+        <label>Animation Speed:<br /> (0 - 10000)</label>
+        <input type="text" id="animSpeedForm" placeholder="0-10000">
+    </div>
+    <div class="row">
+        <label>Pause on Hover:</label>
+        <select id="pauseOnHoverForm">
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+    </div>
+    <div class="row">
+        <label>Pictures in viewport:<br />(1 - 7)</label>
+        <input type="text" id="picsInViewportForm" placeholder="1-7">
+    </div>
+    <input class="button" type="submit" name="submit" value="Submit">
+</form>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="carouselTicker.js"></script>
+<script src="carouselTicker-with-input.js"></script>

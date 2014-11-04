@@ -154,8 +154,36 @@ var containerTicker = function(container, config){
 
 		setListeners();
 	}
+
+	else if(pauseOnHover === false){
+		$(container).unbind('mouseenter mouseleave');
+	}
 };
 
-$(document).ready(containerTicker('.carousel', {direction: 'left', animSpeed: 1000, picsInViewport: 2}));
- 
-$(document).ready(containerTicker('.carousel1', {direction: 'right', animSpeed: 2000, picsInViewport: 4}));
+
+$(document).ready(function(){
+
+	var divClone = $('.carousel').clone();
+
+	$('#inputs').submit(function(event){
+		event.preventDefault();
+		$('.carousel').stop();
+
+		$('.carousel').replaceWith(divClone.clone());
+
+		directionInput = $('#directionForm').val();
+		animSpeedInput = $('#animSpeedForm').val();
+		pauseOnHoverInput = $('#pauseOnHoverForm').val();
+		picsInViewportInput = $('#picsInViewportForm').val();
+
+		if(pauseOnHoverInput === 'true'){
+			pauseOnHoverInput = true;
+		}
+		else{
+			pauseOnHoverInput = false;
+		}
+
+		containerTicker('.carousel', {direction: directionInput, animSpeed: Number(animSpeedInput), picsInViewport: Number(picsInViewportInput), pauseOnHover: pauseOnHoverInput});
+	
+	})
+});
