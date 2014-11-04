@@ -42,8 +42,19 @@ var containerTicker = function(container, config){
 
 	// Finds padding for .viewport
 	var pic = $('.pic img')[0];
-	var picWidth = pic.naturalWidth;
-	var picHeight = pic.naturalHeight
+	// Finds natural height/width - fallback for IE8 and under
+	if (typeof pic.naturalWidth == "undefined") {
+		// IE 6/7/8
+		var i = new Image();
+		i.src = pic.src;
+		var picWidth = i.width;
+		var picHeight = i.height;
+	}
+	else {
+		// HTML5 browsers
+		var picWidth = pic.naturalWidth;
+		var picHeight = pic.naturalHeight;
+	}
 
 	var viewportPadding = ( ( ( picHeight / picWidth ) / picsInViewport) * 100) + '%';
 	$(container).parent().css({'padding-bottom' : viewportPadding});
@@ -142,6 +153,7 @@ var containerTicker = function(container, config){
 
 	setListeners();
 };
+
 
 $(document).ready(containerTicker('.carousel', {direction: 'left', animSpeed: 1000, picsInViewport: 2}));
 
